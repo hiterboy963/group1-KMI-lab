@@ -49,4 +49,56 @@ python setup_vault.py
 
 When prompted, paste the Root Token you copied from Step 3.
 
+### 5. Run the Application
+Now that your local Vault is configured, you can run the main application logic.
+
+```bash
+python main.py
+```
+
+### How to update the progress?
+We use Git to sync our progress because Hashivault is running on a local machine, not on the cloud. Here is the strict workflow to follow when adding new features.
+
+### Scenario A: You want to add a new feature (e.g., MFA)
+If you need to add a new secret (like an MFA key), you must update all 3 files:
+
+1. Edit setup_vault.py: Add the code to create the new secret path.
+
+Example:
+```bash
+client.secrets.kv.v2.create_or_update_secret(path='project/mfa', ...)
+```
+2. Edit kmi_client.py: Add a helper function so main.py can access it.
+
+Example:
+```bash
+def get_mfa_secret(self):
+    return ...
+```
+
+3. Edit main.py: Add the logic to actually use the new feature.
+
+4. Commit & Push:
+
+```bash
+git add .
+git commit
+git push
+```
+### Scenario B: You are pulling the update
+When a teammate pushes new code, you need to update your vault to sync the progress.
+
+To get the Code:
+
+```bash
+git pull
+```
+
+To Update Your Infrastructure, Run the setup script again. This will create any new paths when added.
+
+```bash
+python setup_vault.py
+python main.py
+```
+
 
