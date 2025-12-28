@@ -60,7 +60,8 @@ python main.py
 We use Git to sync our progress because Hashivault is running on a local machine, not on the cloud. Here is the strict workflow to follow when adding new features.
 
 ### Scenario A: You want to add a new feature (e.g., MFA)
-If you need to add a new secret (like an MFA key), you must update all 3 files:
+***Use this when you need a brand new "Folder" or "Shelf" in the Vault (e.g., adding MFA for the first time).***
+you must update all 3 files:
 
 1. Edit setup_vault.py: Add the code to create the new secret path.
 
@@ -100,5 +101,35 @@ To Update Your Infrastructure, Run the setup script again. This will create any 
 python setup_vault.py
 python main.py
 ```
+### Scenario C: You are just adding a Key (Data Entry)
+*Use this when the "Folder" already exists, and you just want to put a new secret inside it. You do NOT need to touch the setup script.*
+
+**Example:** The path `project/database` already exists, but you want to add a secondary password.
+
+1.  **Edit `main.py` ONLY:**
+    Use the client to write the new data to the existing path.
+    ```python
+    # We are just adding data to an existing path, so no setup_vault changes needed.
+    kmi.client.secrets.kv.v2.create_or_update_secret(
+        path='project/database',
+        secret=dict(password="old-pass", backup_password="NEW-SECRET-HERE")
+    )
+    ```
+2.  **Run `python main.py`** to test it.
+3.  **Commit & Push `main.py`.**
+
+## ⚠️ Understanding the Development Environment
+
+It is important to understand that in this project, we are running HashiCorp Vault in **Development Mode** (`-dev`).
+
+### How it works
+1.  **In-Memory Storage:** The Vault server runs entirely in **RAM**. It does not write any data to your hard drive.
+2.  **Volatile Data:** As soon as you stop the server (Ctrl+C) or close the terminal, **the Vault is destroyed.** All secrets, keys, and policies are wiped instantly.
+
+### Why we use `setup_vault.py`
+Because the Vault resets to a "blank slate" every time you restart it, we cannot rely on manual configuration. Instead, we use an **Infrastructure as Code (IaC)** approach:
+
+* **The Server** (`vault server -dev`) provides the empty infrastructure.
+* **The Script** (`setup_vault.py`) acts as the "Architect." When you run it, it programmatically rebuilds the entire environment—creating the secret paths, enabling audit logs, and setting up encryption keys from scratch.
 
 
