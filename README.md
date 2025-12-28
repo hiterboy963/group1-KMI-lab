@@ -1,4 +1,4 @@
-# group1-KMI-lab
+# Group1-KMI-Lab
 
 Project Task: Key Management Infrastructure (KMI)
 
