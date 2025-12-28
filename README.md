@@ -16,6 +16,6 @@ Every developer runs their own local instance of the KMS. Follow these steps to 
 Clone the repository and install the dependencies:
 
 ```bash
-git clone <YOUR_GITHUB_REPO_LINK_HERE>
+git clone https://github.com/hiterboy963/group1-KMI-lab.git
 cd kmi-project
 pip install hvac python-dotenv
