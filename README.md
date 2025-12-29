@@ -18,7 +18,7 @@ Clone the repository and install the dependencies:
 ```bash
 git clone https://github.com/hiterboy963/group1-KMI-lab.git
 cd kmi-project
-pip install hvac
+pip install hvac pyotp qrcode
 ```
 
 ### 3. Start the KMS (Localhost)
