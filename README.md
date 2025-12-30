@@ -71,6 +71,7 @@ Clone the repository and install the dependencies:
 ```bash
 git clone https://github.com/hiterboy963/group1-KMI-lab.git
 # Upgrade pip and install requirements
+cd group1-KMI-lab
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
