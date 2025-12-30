@@ -70,7 +70,9 @@ Clone the repository and install the dependencies:
 
 ```bash
 git clone https://github.com/hiterboy963/group1-KMI-lab.git
-pip install hvac pyotp qrcode pillow
+# Upgrade pip and install requirements
+pip install --upgrade pip
+pip install -r requirements.txt
 ```
 ### 3. Setup Configuration (Secrets File)
 
